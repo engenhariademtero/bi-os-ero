@@ -1,0 +1,4 @@
+sincronizacao.log
+config.json
+*.tmp
+~$*.xlsx

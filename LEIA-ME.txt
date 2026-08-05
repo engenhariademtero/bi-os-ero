@@ -1,0 +1,40 @@
+BI DE ACOMPANHAMENTO DE OS — GITHUB PAGES
+
+O QUE ESTE PACOTE FAZ
+- Lê automaticamente o Report.xlsx na pasta de rede.
+- Gera somente dados gerenciais anônimos para o site.
+- Atualiza indicadores, gráficos e filtros de Instalação/LDAT e período de criação.
+- Envia as alterações ao GitHub Pages a cada 30 minutos.
+
+PRIMEIRA CONFIGURAÇÃO
+1. Instale o Git for Windows: https://git-scm.com/download/win
+2. Mantenha o Python 3 instalado.
+3. No GitHub, crie um repositório público vazio chamado bi-os-ero.
+4. Extraia este pacote em uma pasta permanente, por exemplo C:\BI_OS.
+5. Clique com o botão direito em instalar.ps1 e escolha “Executar com PowerShell”.
+6. Cole a URL HTTPS do repositório quando solicitado.
+7. O Git poderá abrir o navegador para você autorizar sua conta.
+8. No GitHub, abra Settings > Pages.
+9. Em Source, escolha “Deploy from a branch”. Selecione main e /(root), depois Save.
+
+O link ficará no formato:
+https://SEU-USUARIO.github.io/bi-os-ero/
+
+ATUALIZAÇÃO AUTOMÁTICA
+- A tarefa “Atualizar BI de OS” verifica a planilha a cada 30 minutos.
+- O computador precisa estar ligado, conectado à rede da Energisa e à internet.
+- O GitHub Pages normalmente leva de 1 a 3 minutos para refletir cada envio.
+- Somente o arquivo data.js é atualizado; a planilha não é enviada ao GitHub.
+
+ATUALIZAÇÃO MANUAL
+- Execute ATUALIZAR_AGORA.bat.
+- Em caso de erro, consulte sincronizacao.log.
+
+ALTERAR O CAMINHO OU INTERVALO
+- Abra config.json no Bloco de Notas.
+- Altere arquivo_origem ou intervalo_minutos.
+- Para mudar o intervalo depois da instalação, execute instalar.ps1 novamente.
+
+SEGURANÇA DOS DADOS
+- Não são enviados número da OS, observações, ativos, esquemas ou caminhos internos.
+- O site recebe apenas instalação, mês, status, prioridade, aging e marcadores de qualidade.
