@@ -13,7 +13,7 @@ import sys
 import tempfile
 import unicodedata
 import zipfile
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parent
 CONFIG = ROOT / "config.json"
 OUTPUT = ROOT / "data.js"
 LOG = ROOT / "sincronizacao.log"
+TZ_RONDONIA = timezone(timedelta(hours=-4))
 NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main", "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships"}
 REL_NS = {"p": "http://schemas.openxmlformats.org/package/2006/relationships"}
 
@@ -40,11 +41,16 @@ ALIASES = {
 
 
 def log(message: str) -> None:
-    stamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    stamp = agora().strftime("%d/%m/%Y %H:%M:%S")
     text = f"[{stamp}] {message}"
     print(text)
     with LOG.open("a", encoding="utf-8") as handle:
         handle.write(text + "\n")
+
+
+def agora() -> datetime:
+    """Retorna data e hora de Rondônia (UTC-4), sem depender do fuso do computador."""
+    return datetime.now(TZ_RONDONIA).replace(tzinfo=None)
 
 
 def norm(value) -> str:
@@ -230,7 +236,7 @@ def run_git() -> None:
     if not changed:
         log("Nenhuma alteração na base; envio não necessário.")
         return
-    subprocess.run(["git", "commit", "-m", f"Atualiza base de OS em {datetime.now():%d/%m/%Y %H:%M}"], cwd=ROOT, check=True)
+    subprocess.run(["git", "commit", "-m", f"Atualiza base de OS em {agora():%d/%m/%Y %H:%M}"], cwd=ROOT, check=True)
     subprocess.run(["git", "push"], cwd=ROOT, check=True)
     log("Site enviado ao GitHub Pages com sucesso.")
 
@@ -243,8 +249,10 @@ def main() -> int:
     try:
         config = json.loads(CONFIG.read_text(encoding="utf-8"))
         source = Path(args.arquivo or config["arquivo_origem"])
-        records = build_records(read_xlsx(source), datetime.now())
-        payload = {"atualizado_em": datetime.now().isoformat(timespec="seconds"), "origem_atualizada_em": datetime.fromtimestamp(source.stat().st_mtime).isoformat(timespec="seconds"), "registros": records}
+        reference = agora()
+        records = build_records(read_xlsx(source), reference)
+        source_time = datetime.fromtimestamp(source.stat().st_mtime, TZ_RONDONIA).replace(tzinfo=None)
+        payload = {"atualizado_em": reference.isoformat(timespec="seconds"), "origem_atualizada_em": source_time.isoformat(timespec="seconds"), "registros": records}
         temp = Path(tempfile.mkstemp(prefix="data_os_", suffix=".js", dir=ROOT)[1])
         temp.write_text("window.OS_DATA=" + json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
         temp.replace(OUTPUT)
