@@ -2,5 +2,6 @@
   "arquivo_origem": "\\\\fs-bi\\ero\\DTEC\\DEMT\\LDAT\\Report.xlsx",
   "intervalo_minutos": 30,
   "titulo": "BI de Acompanhamento de OS",
-  "github_repositorio": "engenhariademtero/bi-os-ero"
+  "github_repositorio": "engenhariademtero/bi-os-ero",
+  "pasta_relatorio_interno": "Relatorios_Internos"
 }
