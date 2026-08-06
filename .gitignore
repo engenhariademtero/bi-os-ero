@@ -1,4 +1,5 @@
 sincronizacao.log
 config.json
+Base_OS_Tratada.csv
 *.tmp
 ~$*.xlsx
