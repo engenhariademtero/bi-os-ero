@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0A0F1C">
-  <title>Painel Gerencial de Ordens de Serviço</title>
+  <title>Gestão de OS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -29,6 +29,22 @@
       --font-body:'Inter',Arial,sans-serif;
       --font-mono:'IBM Plex Mono',Consolas,monospace;
     }
+    
+    [data-theme="light"] {
+      --bg: #F9FAFB;
+      --bg-soft: #F3F4F6;
+      --surface: #FFFFFF;
+      --surface-2: #F9FAFB;
+      --line: #E5E7EB;
+      --line-soft: #D1D5DB;
+      --ink: #111827;
+      --muted: #4B5563;
+      --teal: #0D9488;
+      --copper: #B45309;
+      --red: #DC2626;
+      --green: #059669;
+    }
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -44,6 +60,15 @@
       font-family:var(--font-body);
       -webkit-font-smoothing:antialiased;
     }
+    
+    [data-theme="light"] body {
+      background-image:
+        radial-gradient(1100px 520px at 12% -8%, rgba(13,148,136,.10), transparent 60%),
+        radial-gradient(900px 480px at 94% -6%, rgba(180,83,9,.09), transparent 55%),
+        linear-gradient(rgba(0,0,0,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.035) 1px, transparent 1px);
+    }
+    
     button,select,input{font:inherit}
     header{
       min-height:74px;padding:15px clamp(18px,4vw,64px);
@@ -53,8 +78,14 @@
       display:flex;align-items:center;justify-content:space-between;gap:20px;
       position:sticky;top:0;z-index:40;
     }
+    
+    [data-theme="light"] header {
+      background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(243,244,246,.94));
+    }
+    
     .brand{display:flex;align-items:center;gap:12px}
     .mark{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--copper),#c96f2e);color:#1c1002;font-family:var(--font-display);font-weight:700;font-size:22px;box-shadow:0 8px 20px -8px rgba(226,145,75,.65)}
+    [data-theme="light"] .mark { color: #fff; }
     .brand div{display:grid;gap:3px}
     .brand strong{font-family:var(--font-display);font-size:13px;letter-spacing:.14em;color:var(--ink)}
     .brand small{color:var(--muted);font-size:11px}
@@ -65,6 +96,9 @@
       background:linear-gradient(135deg, rgba(18,27,46,.92), rgba(9,14,25,.98));
       border-bottom:1px solid var(--line);color:var(--ink);
       display:flex;justify-content:space-between;align-items:end;gap:28px;
+    }
+    [data-theme="light"] .hero {
+      background: linear-gradient(135deg, rgba(249,250,251,.92), rgba(243,244,246,.98));
     }
     .hero:before{content:"";position:absolute;top:-40%;right:-8%;width:520px;height:520px;background:radial-gradient(circle, rgba(226,145,75,.16), transparent 65%);pointer-events:none}
     .hero:after{content:"";position:absolute;bottom:-50%;left:-10%;width:480px;height:480px;background:radial-gradient(circle, rgba(52,195,201,.14), transparent 65%);pointer-events:none}
@@ -80,8 +114,11 @@
     .summary-strip strong{color:var(--ink);font-weight:600}
     .summary-strip span:last-child{margin-left:auto;font-family:var(--font-mono)}
     .data-alert{display:none;margin:18px clamp(18px,4vw,64px) 0;padding:16px 18px;border:1px solid rgba(232,97,90,.4);border-left:4px solid var(--red);border-radius:var(--radius-sm);background:rgba(232,97,90,.08);color:#F4C2BF;line-height:1.5;font-size:13px}
+    [data-theme="light"] .data-alert { color: var(--red); }
     .data-alert strong{display:block;margin-bottom:3px;color:#FBD8D5;font-weight:700}
+    [data-theme="light"] .data-alert strong { color: #991B1B; }
     .data-alert code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px;font-family:var(--font-mono)}
+    [data-theme="light"] .data-alert code { background: rgba(0,0,0,.08); }
     .filters{padding:18px clamp(18px,4vw,64px);background:var(--bg-soft);border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(145px,.75fr) repeat(3,minmax(165px,1fr)) repeat(2,minmax(145px,.75fr)) auto;gap:14px;align-items:end}
     .filter-title{display:grid;gap:5px;align-self:center}
     .filter-title span{color:var(--teal);font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
@@ -89,6 +126,7 @@
     .filters label{display:grid;gap:6px;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
     .filters select,.filters input{width:100%;min-height:42px;padding:9px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink)}
     .filters input::-webkit-calendar-picker-indicator{filter:invert(.85);cursor:pointer}
+    [data-theme="light"] .filters input::-webkit-calendar-picker-indicator{filter:invert(0);}
     .filters button{min-height:42px;padding:9px 16px;border:1px solid var(--teal);border-radius:var(--radius-sm);background:transparent;color:var(--teal);font-weight:700;cursor:pointer;transition:background .15s ease}
     .filters button:hover:not(:disabled){background:rgba(52,195,201,.12)}
     .filters button:disabled{border-color:var(--line);color:var(--muted);cursor:default}
@@ -126,6 +164,7 @@
     .rank-list{margin-top:16px;display:grid;gap:6px}
     .rank-row{display:grid;grid-template-columns:90px 1fr 35px;gap:8px;align-items:center;padding:8px;border-radius:9px;font-size:12px;color:var(--ink)}
     .rank-row:hover{background:rgba(255,255,255,.03)}
+    [data-theme="light"] .rank-row:hover{background:rgba(0,0,0,.03)}
     .bar{height:8px;border-radius:999px;background:var(--line-soft);overflow:hidden}
     .bar i{display:block;height:100%;border-radius:inherit;background:var(--teal)}
     .rank-row strong{text-align:right;font-family:var(--font-mono)}
@@ -161,6 +200,23 @@
     .multi-menu label:hover{background:rgba(52,195,201,.1)}
     .multi-menu input{width:16px!important;min-height:16px!important;accent-color:var(--teal)}
     .multi-hint{padding:5px 8px 8px;color:var(--muted);font-size:10px;border-bottom:1px solid var(--line);margin-bottom:4px}
+    
+    .theme-toggle-btn {
+      cursor: pointer;
+      background: transparent;
+      color: var(--ink);
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--bg-soft);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
     @media(max-width:1350px){.filters{grid-template-columns:repeat(3,1fr) auto}.filter-title{grid-column:1/-1}}
     @media(max-width:980px){.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.filters{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:640px){
@@ -187,18 +243,104 @@
   </style>
 </head>
 <body>
-  <header><div class="brand"><span class="mark">E</span><div><strong>ENERGISA RONDÔNIA</strong><small>DEMT • Inteligência de Manutenção</small></div></div><span class="status-pill"><i></i><span id="updated">Carregando dados…</span></span></header>
-  <section class="hero"><div><span class="hero-badge">CENTRO DE INTELIGÊNCIA OPERACIONAL</span><p class="eyebrow">ACOMPANHAMENTO GERENCIAL</p><h1 id="siteTitle">Ordens de serviço sob controle.</h1><p>Visão consolidada da carteira, prazos, criticidade e qualidade dos registros.</p></div><div class="hero-focus"><span>Backlog crítico</span><strong id="heroCritical">—</strong><small id="heroShare">— das OS abertas</small></div></section>
+  <header>
+    <div class="brand">
+      <span class="mark">E</span>
+      <div>
+        <strong>ENERGISA RONDÔNIA</strong>
+        <small>DEMT • Inteligência de Manutenção</small>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="themeToggle" class="status-pill theme-toggle-btn">Modo Claro</button>
+      <span class="status-pill"><i></i><span id="updated">Carregando dados…</span></span>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <div>
+      <span class="hero-badge">CENTRO DE INTELIGÊNCIA OPERACIONAL</span>
+      <p class="eyebrow">ACOMPANHAMENTO GERENCIAL</p>
+      <h1 id="siteTitle">Gestão de OS</h1>
+      <p>Visão consolidada da carteira, prazos, criticidade e qualidade dos registros.</p>
+    </div>
+    <div class="hero-focus">
+      <span>Backlog crítico</span>
+      <strong id="heroCritical">—</strong>
+      <small id="heroShare">— das OS abertas</small>
+    </div>
+  </section>
+  
   <div class="summary-strip"><span>Equipes: <strong>Inspeção · LDAT · Subestação · Trafo</strong></span><span>Áreas: <strong>Linhas · Subestações · Transformadores · Automação · Telecom</strong></span><span id="sourceDate">Fonte: Report.xlsx</span></div>
   <div class="data-alert" id="dataAlert"><strong>Não foi possível carregar a base do painel.</strong>Confirme que o arquivo <code>data.js</code> foi enviado para a mesma pasta do <code>index.html</code> no GitHub.</div>
-  <section class="filters"><div class="filter-title"><span>FILTROS GLOBAIS</span><strong id="cutCount">— OS no recorte</strong></div><label>Equipe<select id="team"><option value="ALL">Todas as equipes</option><option>Inspeção</option><option>LDAT</option><option>Subestação</option><option>Trafo</option><option>Não classificada</option></select></label><label>Área da atividade<select id="activity"><option value="ALL">Todas as áreas</option><option>Linhas</option><option>Subestações</option><option>Transformadores</option><option>Automação</option><option>Telecom</option><option>Não classificada</option></select></label><label>Instalação / LDAT / SED<select id="installation"><option value="ALL">Todas as instalações</option></select></label><label>Criação — de<input id="start" type="month"></label><label>Criação — até<input id="end" type="month"></label><button id="clear" disabled>Limpar filtros</button></section>
-  <nav class="tabs"><button class="active" data-tab="overview">Visão executiva</button><button data-tab="backlog">Backlog</button><button data-tab="quality">Qualidade</button></nav>
+  
+  <section class="filters">
+    <div class="filter-title"><span>FILTROS GLOBAIS</span><strong id="cutCount">— OS no recorte</strong></div>
+    <label>Equipe<select id="team"><option value="ALL">Todas as equipes</option><option>Inspeção</option><option>LDAT</option><option>Subestação</option><option>Trafo</option><option>Não classificada</option></select></label>
+    <label>Área da atividade<select id="activity"><option value="ALL">Todas as áreas</option><option>Linhas</option><option>Subestações</option><option>Transformadores</option><option>Automação</option><option>Telecom</option><option>Não classificada</option></select></label>
+    <label>Instalação / LDAT / SED<select id="installation"><option value="ALL">Todas as instalações</option></select></label>
+    <label>Criação — de<input id="start" type="month"></label>
+    <label>Criação — até<input id="end" type="month"></label>
+    <button id="clear" disabled>Limpar filtros</button>
+  </section>
+  
+  <nav class="tabs">
+    <button class="active" data-tab="overview">Visão executiva</button>
+    <button data-tab="backlog">Backlog</button>
+    <button data-tab="quality">Qualidade</button>
+  </nav>
+  
   <main>
-    <section class="view active" id="overview"><div class="cards" id="overviewCards"></div><div class="grid"><article class="panel"><div class="panel-head"><div><span class="kicker">EVOLUÇÃO</span><h2>Fluxo mensal de OS</h2></div><span class="context" id="trendContext">Últimos 12 meses</span></div><div class="legend"><i class="dot blue"></i>Criadas <i class="dot orange-dot"></i>Concluídas</div><div id="trend"></div></article><article class="panel"><span class="kicker">CONCENTRAÇÃO</span><h2>Backlog por instalação</h2><div class="rank-list" id="ranking"></div><div class="detail" id="rankDetail"></div></article></div></section>
-    <section class="view" id="backlog"><div class="cards" id="backlogCards"></div><div class="grid"><article class="panel"><span class="kicker">ENVELHECIMENTO</span><h2>Faixas de aging do backlog</h2><div class="aging" id="aging"></div></article><article class="panel"><span class="kicker">CARTEIRA FILTRADA</span><h2>Distribuição por prioridade</h2><div class="list" id="priorities"></div><div class="callout"><strong>Foco gerencial</strong><p id="focusText"></p></div></article></div></section>
-    <section class="view" id="quality"><div class="cards" id="qualityCards"></div><div class="grid"><article class="panel"><span class="kicker">CONSISTÊNCIA</span><h2>Completude dos campos-chave</h2><div class="list green-bars" id="qualityList"></div></article><article class="panel"><span class="kicker">GOVERNANÇA</span><h2>Leitura gerencial da base</h2><div class="callout" id="governance"></div></article></div></section>
+    <section class="view active" id="overview">
+      <div class="cards" id="overviewCards"></div>
+      <div class="grid">
+        <article class="panel">
+          <div class="panel-head"><div><span class="kicker">EVOLUÇÃO</span><h2>Fluxo mensal de OS</h2></div><span class="context" id="trendContext">Últimos 12 meses</span></div>
+          <div class="legend"><i class="dot blue"></i>Criadas <i class="dot orange-dot"></i>Concluídas</div>
+          <div id="trend"></div>
+        </article>
+        <article class="panel">
+          <span class="kicker">CONCENTRAÇÃO</span><h2>Backlog por instalação</h2>
+          <div class="rank-list" id="ranking"></div><div class="detail" id="rankDetail"></div>
+        </article>
+      </div>
+    </section>
+    
+    <section class="view" id="backlog">
+      <div class="cards" id="backlogCards"></div>
+      <div class="grid">
+        <article class="panel">
+          <span class="kicker">ENVELHECIMENTO</span><h2>Faixas de aging do backlog</h2>
+          <div class="aging" id="aging"></div>
+        </article>
+        <article class="panel">
+          <span class="kicker">CARTEIRA FILTRADA</span><h2>Distribuição por prioridade</h2>
+          <div class="list" id="priorities"></div>
+          <div class="callout"><strong>Foco gerencial</strong><p id="focusText"></p></div>
+        </article>
+      </div>
+    </section>
+    
+    <section class="view" id="quality">
+      <div class="cards" id="qualityCards"></div>
+      <div class="grid">
+        <article class="panel">
+          <span class="kicker">CONSISTÊNCIA</span><h2>Completude dos campos-chave</h2>
+          <div class="list green-bars" id="qualityList"></div>
+        </article>
+        <article class="panel">
+          <span class="kicker">GOVERNANÇA</span><h2>Leitura gerencial da base</h2>
+          <div class="callout" id="governance"></div>
+        </article>
+      </div>
+    </section>
   </main>
-  <footer><span>BI gerencial de Ordens de Serviço</span><span id="footerDate">Base sincronizada automaticamente</span></footer>
+  
+  <footer>
+    <span>BI gerencial de Ordens de Serviço</span>
+    <span id="footerDate">Base sincronizada automaticamente</span>
+  </footer>
+  
   <script src="data.js" onerror="document.getElementById('dataAlert').style.display='block'"></script>
   <script>
   (()=>{const payload=window.OS_DATA||{registros:[],atualizado_em:null};const all=payload.registros||[];if(!window.OS_DATA)document.getElementById('dataAlert').style.display='block';fetch('config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{if(c.titulo){document.title=c.titulo;document.getElementById('siteTitle').textContent=c.titulo}}).catch(()=>{});const OPEN=new Set(["Atrasada","Em execução","Programada","Aberta no prazo"]);const qLabels=["Número da OS","Instalação / LDAT","Esquema / Atividade","Data de Criação","Data de Prazo","Situação da OS","Data de Término","Ativo","Observação"];const pOrder=["ESTRUTURANTE","ALTA","MÉDIA","BAIXA","SEM PRIORIDADE"];const pLabels={ESTRUTURANTE:"Estruturante",ALTA:"Alta",MÉDIA:"Média",BAIXA:"Baixa","SEM PRIORIDADE":"Sem prioridade"};const nf=new Intl.NumberFormat("pt-BR");const pf=new Intl.NumberFormat("pt-BR",{style:"percent",maximumFractionDigits:0});const df=new Intl.NumberFormat("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1});const share=(a,b)=>b?a/b:0;const $=id=>document.getElementById(id);const card=(label,value,note,tone="")=>`<article class="card ${tone}"><span>${label}</span><strong>${value}</strong><small>${note}</small></article>`;const fmtDate=value=>value?new Date(value).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"não informada";
@@ -207,14 +349,26 @@
   function upgradeMulti(id,allText){const select=$(id);select.multiple=true;select.classList.add('multi-source');[...select.options].forEach(o=>o.selected=false);const details=document.createElement('details');details.className='multi';details.dataset.for=id;const summary=document.createElement('summary');summary.textContent=allText;const menu=document.createElement('div');menu.className='multi-menu';menu.innerHTML='<div class="multi-hint">Marque uma ou mais opções</div>';const refresh=()=>{const values=selected(id);summary.textContent=!values.length?allText:values.length===1?values[0]:`${values.length} selecionadas`};[...select.options].filter(o=>o.value!=='ALL').forEach(o=>{const label=document.createElement('label');const input=document.createElement('input');input.type='checkbox';input.value=o.value;input.addEventListener('change',()=>{o.selected=input.checked;refresh();select.dispatchEvent(new Event('change'))});label.append(input,document.createTextNode(o.textContent));menu.append(label)});details.append(summary,menu);select.after(details);select._multiRefresh=()=>{[...menu.querySelectorAll('input')].forEach(input=>input.checked=[...select.options].some(o=>o.value===input.value&&o.selected));refresh()}}
   upgradeMulti('team','Todas as equipes');upgradeMulti('activity','Todas as áreas');upgradeMulti('installation','Todas as instalações');
   function state(){const teams=selected('team'),activities=selected('activity'),installations=selected('installation'),s=$('start').value,e=$('end').value;return all.filter(x=>(!teams.length||teams.includes(x.e))&&(!activities.length||activities.includes(x.r))&&(!installations.length||installations.includes(x.i))&&(!(s||e)||x.c)&&(!s||x.c>=s)&&(!e||x.c<=e))}
-  function trend(data){const map=new Map;data.forEach(x=>{if(x.c){const r=map.get(x.c)||{m:x.c,c:0,t:0};r.c++;map.set(x.c,r)}if(x.t){const r=map.get(x.t)||{m:x.t,c:0,t:0};r.t++;map.set(x.t,r)}});let rows=[...map.values()].sort((a,b)=>a.m.localeCompare(b.m));if(!$('start').value&&!$('end').value)rows=rows.slice(-12);if(!rows.length){$('trend').innerHTML='<div class="empty"><strong>Nenhuma OS encontrada</strong><span>Ajuste os filtros.</span></div>';return}const W=760,H=300,L=46,R=22,T=24,B=48,max=Math.ceil(Math.max(10,...rows.flatMap(x=>[x.c,x.t]))/50)*50,x=n=>L+n*(W-L-R)/Math.max(rows.length-1,1),y=v=>T+(H-T-B)*(1-v/max),line=k=>rows.map((r,n)=>`${x(n)},${y(r[k])}`).join(' '),label=m=>{const [a,b]=m.split('-');return ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+b-1]+'/'+a.slice(-2)};let svg=`<svg viewBox="0 0 ${W} ${H}">`;[0,.25,.5,.75,1].forEach(v=>{const n=Math.round(max*v);svg+=`<line x1="${L}" x2="${W-R}" y1="${y(n)}" y2="${y(n)}" stroke="#1F2E45"/><text x="${L-10}" y="${y(n)+4}" text-anchor="end" fill="#7C90B0" font-size="11">${n}</text>`});rows.forEach((r,n)=>svg+=`<text x="${x(n)}" y="${H-16}" text-anchor="middle" fill="#7C90B0" font-size="11">${rows.length>9&&n%2?'':label(r.m)}</text>`);svg+=`<polyline points="${line('c')}" fill="none" stroke="#34C3C9" stroke-width="3"/><polyline points="${line('t')}" fill="none" stroke="#E2914B" stroke-width="3"/></svg>`;$('trend').innerHTML=svg}
+  
+  function trend(data){const map=new Map;data.forEach(x=>{if(x.c){const r=map.get(x.c)||{m:x.c,c:0,t:0};r.c++;map.set(x.c,r)}if(x.t){const r=map.get(x.t)||{m:x.t,c:0,t:0};r.t++;map.set(x.t,r)}});let rows=[...map.values()].sort((a,b)=>a.m.localeCompare(b.m));if(!$('start').value&&!$('end').value)rows=rows.slice(-12);if(!rows.length){$('trend').innerHTML='<div class="empty"><strong>Nenhuma OS encontrada</strong><span>Ajuste os filtros.</span></div>';return}const W=760,H=300,L=46,R=22,T=24,B=48,max=Math.ceil(Math.max(10,...rows.flatMap(x=>[x.c,x.t]))/50)*50,x=n=>L+n*(W-L-R)/Math.max(rows.length-1,1),y=v=>T+(H-T-B)*(1-v/max),line=k=>rows.map((r,n)=>`${x(n)},${y(r[k])}`).join(' '),label=m=>{const [a,b]=m.split('-');return ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][+b-1]+'/'+a.slice(-2)};let svg=`<svg viewBox="0 0 ${W} ${H}">`;[0,.25,.5,.75,1].forEach(v=>{const n=Math.round(max*v);svg+=`<line x1="${L}" x2="${W-R}" y1="${y(n)}" y2="${y(n)}" stroke="var(--line)"/><text x="${L-10}" y="${y(n)+4}" text-anchor="end" fill="var(--muted)" font-size="11">${n}</text>`});rows.forEach((r,n)=>svg+=`<text x="${x(n)}" y="${H-16}" text-anchor="middle" fill="var(--muted)" font-size="11">${rows.length>9&&n%2?'':label(r.m)}</text>`);svg+=`<polyline points="${line('c')}" fill="none" stroke="var(--teal)" stroke-width="3"/><polyline points="${line('t')}" fill="none" stroke="var(--copper)" stroke-width="3"/></svg>`;$('trend').innerHTML=svg}
+  
   function render(){const data=state(),total=data.length,done=data.filter(x=>x.s==='Concluída').length,cancel=data.filter(x=>x.s==='Cancelada').length,open=data.filter(x=>OPEN.has(x.s)).length,late=data.filter(x=>x.s==='Atrasada').length,critical=data.filter(x=>x.n==='Crítica').length,complete=data.filter(x=>x.q).length,agingVals=data.filter(x=>OPEN.has(x.s)&&x.a!=null).map(x=>x.a),above=agingVals.filter(x=>x>90).length,avg=agingVals.length?agingVals.reduce((a,b)=>a+b,0)/agingVals.length:0;const compliance=data.filter(x=>['No prazo','Fora do prazo'].includes(x.u)),onTime=compliance.filter(x=>x.u==='No prazo').length;$('cutCount').textContent=`${nf.format(total)} OS no recorte`;$('heroCritical').textContent=nf.format(critical);$('heroShare').textContent=`${pf.format(share(critical,open))} das OS abertas`;$('clear').disabled=['team','activity','installation'].every(id=>selected(id).length===0)&&!$('start').value&&!$('end').value;$('trendContext').textContent=$('start').value||$('end').value?'Período filtrado':'Últimos 12 meses';
   $('overviewCards').innerHTML=card('Total de OS',nf.format(total),'recorte selecionado')+card('OS abertas',nf.format(open),`${pf.format(share(open,total))} da carteira`,'orange')+card('OS atrasadas',nf.format(late),`${pf.format(share(late,open))} do backlog`,'red')+card('Taxa de conclusão',pf.format(share(done,total-cancel)),`${nf.format(done)} concluídas`,'green');
   $('backlogCards').innerHTML=card('Backlog total',nf.format(open),'OS ainda abertas')+card('Acima de 90 dias',nf.format(above),`${pf.format(share(above,open))} do backlog`,'red')+card('OS críticas',nf.format(critical),'prioridade imediata','orange')+card('Aging médio',`${df.format(avg)}d`,'carteira aberta','green');
   const quality=qLabels.map((campo,n)=>({campo,valor:share(data.filter(x=>x.f[n]).length,total)}));$('qualityCards').innerHTML=card('Registros completos',pf.format(share(complete,total)),`${nf.format(complete)} linhas completas`,'green')+card('Registros incompletos',nf.format(total-complete),`${pf.format(share(total-complete,total))} da base`,'orange')+card('Duplicidades','0','nenhuma OS repetida')+card('Prazo informado',pf.format(quality[4].valor),`${nf.format(total-Math.round(quality[4].valor*total))} pendências`,'green');
   trend(data);const groups=new Map;data.forEach(x=>{const r=groups.get(x.i)||{total:0,open:0,late:0,sum:0,count:0};r.total++;if(OPEN.has(x.s)){r.open++;if(x.a!=null){r.sum+=x.a;r.count++}}if(x.s==='Atrasada')r.late++;groups.set(x.i,r)});const rank=[...groups].map(([name,r])=>({name,...r,avg:r.count?r.sum/r.count:0})).sort((a,b)=>b.open-a.open||b.late-a.late||b.total-a.total).slice(0,10),maxRank=Math.max(1,...rank.map(x=>x.open));$('ranking').innerHTML=rank.length?rank.map(x=>`<div class="rank-row"><span>${x.name}</span><div class="bar"><i style="width:${x.open/maxRank*100}%"></i></div><strong>${x.open}</strong></div>`).join(''):'<div class="empty">Nenhum registro</div>';const top=rank[0];$('rankDetail').innerHTML=top?`<div><span>Maior backlog</span><strong>${top.name}</strong></div><div><span>Abertas</span><strong>${top.open}</strong></div><div><span>Atrasadas</span><strong>${top.late}</strong></div><div><span>Aging médio</span><strong>${df.format(top.avg)}d</strong></div>`:'';
   const bands=[['Até 30d',0,30],['31–60d',30,60],['61–90d',60,90],['+90d',90,Infinity]].map(([name,min,max],n)=>({name,value:agingVals.filter(v=>n===0?v<=max:v>min&&v<=max).length})),maxBand=Math.max(1,...bands.map(x=>x.value));$('aging').innerHTML=bands.map(x=>`<div class="aging-col"><strong>${nf.format(x.value)}</strong><i style="height:${Math.max(3,x.value/maxBand*100)}%"></i><span>${x.name}</span></div>`).join('');$('priorities').innerHTML=pOrder.map(p=>{const value=data.filter(x=>x.p===p).length;return`<div class="list-row"><span>${pLabels[p]}</span><div class="bar"><i style="width:${share(value,total)*100}%"></i></div><strong>${nf.format(value)}</strong></div>`}).join('');$('focusText').textContent=`Priorizar a redução das ${nf.format(above)} OS com mais de 90 dias, iniciando pelas instalações com maior volume atrasado.`;$('qualityList').innerHTML=quality.map(x=>`<div class="list-row"><span>${x.campo}</span><div class="bar"><i style="width:${x.valor*100}%"></i></div><strong>${pf.format(x.valor)}</strong></div>`).join('');$('governance').innerHTML=`<strong>${pf.format(share(complete,total))} dos registros atendem às validações</strong><p>${nf.format(total-Math.round(quality[4].valor*total))} sem prazo; ${nf.format(total-Math.round(quality[8].valor*total))} sem observação. Todos os indicadores foram recalculados para o recorte selecionado.</p>`}
-  ['team','activity','installation','start','end'].forEach(id=>$(id).addEventListener('change',render));$('clear').addEventListener('click',()=>{['team','activity','installation'].forEach(id=>{[...$(id).options].forEach(o=>o.selected=false);$(id)._multiRefresh()});$('start').value='';$('end').value='';render()});document.addEventListener('click',event=>document.querySelectorAll('.multi[open]').forEach(item=>{if(!item.contains(event.target))item.removeAttribute('open')}));document.querySelectorAll('.tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));btn.classList.add('active');$(btn.dataset.tab).classList.add('active')}));render()})();
+  ['team','activity','installation','start','end'].forEach(id=>$(id).addEventListener('change',render));$('clear').addEventListener('click',()=>{['team','activity','installation'].forEach(id=>{[...$(id).options].forEach(o=>o.selected=false);$(id)._multiRefresh()});$('start').value='';$('end').value='';render()});document.addEventListener('click',event=>document.querySelectorAll('.multi[open]').forEach(item=>{if(!item.contains(event.target))item.removeAttribute('open')}));document.querySelectorAll('.tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));btn.classList.add('active');$(btn.dataset.tab).classList.add('active')}));render();
+  
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+    const root = document.documentElement;
+    const isLight = root.getAttribute('data-theme') === 'light';
+    root.setAttribute('data-theme', isLight ? 'dark' : 'light');
+    themeToggle.textContent = isLight ? 'Modo Claro' : 'Modo Noturno';
+  });
+  
+  })();
   </script>
 </body>
 </html>
